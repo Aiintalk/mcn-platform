@@ -1,0 +1,260 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 1. 用户
+model User {
+  id                BigInt    @id @default(autoincrement())
+  username          String    @unique @db.VarChar(50)
+  displayName       String    @map("display_name") @db.VarChar(100)
+  passwordHash      String    @map("password_hash") @db.VarChar(255)
+  role              Role
+  status            UserStatus @default(active)
+  passwordChangedAt DateTime? @map("password_changed_at") @db.Timestamptz
+  lastLoginAt       DateTime? @map("last_login_at") @db.Timestamptz
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  createdById       BigInt?   @map("created_by")
+
+  createdBy         User?     @relation("UserCreatedBy", fields: [createdById], references: [id])
+  createdUsers      User[]    @relation("UserCreatedBy")
+
+  ownedKols         Kol[]     @relation("KolOwner")
+  outputs           Output[]
+  toolUsageLogs     ToolUsageLog[]
+  uploadedMaterials Material[]
+  uploadedViralScripts ViralScript[]
+  uploadedBenchmarkScripts BenchmarkScript[]
+  kolProfilesCreated KolProfile[]
+  sellingPointsCreated ProductSellingPoint[]
+
+  @@map("users")
+}
+
+enum Role {
+  admin
+  operator
+}
+
+enum UserStatus {
+  active
+  disabled
+
+  @@map("user_status")
+}
+
+// 2. 红人主表
+model Kol {
+  id         BigInt    @id @default(autoincrement())
+  name       String    @db.VarChar(100)
+  douyinId   String?   @unique @map("douyin_id") @db.VarChar(100)
+  douyinUrl  String?   @map("douyin_url")
+  secUserId  String?   @map("sec_user_id") @db.VarChar(100)
+  avatarUrl  String?   @map("avatar_url")
+  tags       String[]
+  ownerId    BigInt?   @map("owner_id")
+  status     KolStatus @default(active)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  owner      User?     @relation("KolOwner", fields: [ownerId], references: [id])
+  profiles   KolProfile[]
+  materials  Material[]
+  viralScripts ViralScript[]
+  outputs    Output[]
+  productRelations KolProductRelation[]
+
+  @@map("kols")
+}
+
+enum KolStatus {
+  active
+  archived
+
+  @@map("kol_status")
+}
+
+// 3. 红人档案（带版本）
+model KolProfile {
+  id            BigInt   @id @default(autoincrement())
+  kolId         BigInt   @map("kol_id")
+  soulMd        String?  @map("soul_md")
+  contentPlanMd String?  @map("content_plan_md")
+  version       Int      @default(1)
+  isCurrent     Boolean  @default(true) @map("is_current")
+  sourceFileUrl String?  @map("source_file_url")
+  createdById   BigInt?  @map("created_by")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  kol           Kol      @relation(fields: [kolId], references: [id], onDelete: Cascade)
+  createdBy     User?    @relation(fields: [createdById], references: [id])
+
+  @@map("kol_profiles")
+}
+
+// 4. 产品主表
+model Product {
+  id             BigInt        @id @default(autoincrement())
+  name           String        @db.VarChar(200)
+  category       String?       @db.VarChar(100)
+  price          Decimal?      @db.Decimal(10, 2)
+  targetAudience String?       @map("target_audience")
+  scenario       String?
+  status         ProductStatus @default(active)
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz
+
+  sellingPoints  ProductSellingPoint[]
+  benchmarkScripts BenchmarkScript[]
+  viralScripts   ViralScript[]
+  outputs        Output[]
+  kolRelations   KolProductRelation[]
+
+  @@map("products")
+}
+
+enum ProductStatus {
+  active
+  archived
+
+  @@map("product_status")
+}
+
+// 5. 产品卖点卡（带版本）
+model ProductSellingPoint {
+  id          BigInt   @id @default(autoincrement())
+  productId   BigInt   @map("product_id")
+  endorsement String?
+  mechanism   String?
+  seeding     String?
+  rawDocUrl   String?  @map("raw_doc_url")
+  version     Int      @default(1)
+  isCurrent   Boolean  @default(true) @map("is_current")
+  createdById BigInt?  @map("created_by")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdBy   User?    @relation(fields: [createdById], references: [id])
+
+  @@map("product_selling_points")
+}
+
+// 6. 爆款库
+model ViralScript {
+  id          BigInt           @id @default(autoincrement())
+  type        ViralScriptType
+  title       String?          @db.VarChar(300)
+  sourceUrl   String?          @map("source_url")
+  platform    String?          @db.VarChar(30)
+  diggCount   BigInt?          @map("digg_count")
+  publishAt   DateTime?        @map("publish_at") @db.Timestamptz
+  transcript  String?
+  structureMd String?          @map("structure_md")
+  kolId       BigInt?          @map("kol_id")
+  productId   BigInt?          @map("product_id")
+  uploadedById BigInt?         @map("uploaded_by")
+  createdAt   DateTime         @default(now()) @map("created_at") @db.Timestamptz
+
+  kol         Kol?             @relation(fields: [kolId], references: [id])
+  product     Product?         @relation(fields: [productId], references: [id])
+  uploadedBy  User?            @relation(fields: [uploadedById], references: [id])
+
+  @@map("viral_scripts")
+}
+
+enum ViralScriptType {
+  persona
+  qianchuan
+  livestream
+  tiktok
+
+  @@map("viral_script_type")
+}
+
+// 7. 对标文案库
+model BenchmarkScript {
+  id           BigInt   @id @default(autoincrement())
+  productId    BigInt?  @map("product_id")
+  title        String?  @db.VarChar(300)
+  sourceUrl    String?  @map("source_url")
+  transcript   String?
+  diggCount    BigInt?  @map("digg_count")
+  uploadedById BigInt?  @map("uploaded_by")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  product      Product? @relation(fields: [productId], references: [id])
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id])
+
+  @@map("benchmark_scripts")
+}
+
+// 8. 工具产出
+model Output {
+  id           BigInt   @id @default(autoincrement())
+  toolCode     String   @map("tool_code") @db.VarChar(50)
+  userId       BigInt?  @map("user_id")
+  kolId        BigInt?  @map("kol_id")
+  productId    BigInt?  @map("product_id")
+  title        String?  @db.VarChar(300)
+  resultMd     String?  @map("result_md")
+  payloadJsonb Json?    @map("payload_jsonb")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  user         User?    @relation(fields: [userId], references: [id])
+  kol          Kol?     @relation(fields: [kolId], references: [id])
+  product      Product? @relation(fields: [productId], references: [id])
+
+  @@index([toolCode, userId, createdAt(sort: Desc)], name: "idx_outputs_tool_user")
+  @@index([kolId, createdAt(sort: Desc)], name: "idx_outputs_kol")
+  @@index([productId, createdAt(sort: Desc)], name: "idx_outputs_product")
+  @@map("outputs")
+}
+
+// 9. 工具调用流水
+model ToolUsageLog {
+  id        BigInt   @id @default(autoincrement())
+  toolCode  String?  @map("tool_code") @db.VarChar(50)
+  userId    BigInt?  @map("user_id")
+  action    String?  @db.VarChar(50)
+  meta      Json?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  user      User?    @relation(fields: [userId], references: [id])
+
+  @@index([createdAt(sort: Desc)], name: "idx_tool_usage_logs_time")
+  @@map("tool_usage_logs")
+}
+
+// 10. 素材库
+model Material {
+  id           BigInt   @id @default(autoincrement())
+  kolId        BigInt   @map("kol_id")
+  type         String?  @db.VarChar(30)
+  title        String?  @db.VarChar(300)
+  source       String?  @db.VarChar(50)
+  diggCount    BigInt?  @map("digg_count")
+  content      String?
+  uploadedById BigInt?  @map("uploaded_by")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  kol          Kol      @relation(fields: [kolId], references: [id], onDelete: Cascade)
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id])
+
+  @@map("materials")
+}
+
+// 11. 红人 ↔ 产品 多对多
+model KolProductRelation {
+  kolId     BigInt @map("kol_id")
+  productId BigInt @map("product_id")
+
+  kol       Kol     @relation(fields: [kolId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([kolId, productId])
+  @@map("kol_product_relations")
+}

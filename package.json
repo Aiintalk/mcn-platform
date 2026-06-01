@@ -1,0 +1,21 @@
+{
+  "name": "mcn-platform",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "start": "pnpm --filter web start",
+    "lint": "pnpm --filter web lint",
+    "db:migrate": "pnpm --filter web db:migrate",
+    "db:deploy": "pnpm --filter web db:deploy",
+    "db:seed": "pnpm --filter web db:seed",
+    "db:studio": "pnpm --filter web prisma studio"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
