@@ -1,7 +1,19 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { pinyin } from 'pinyin-pro'
 import { formatDate } from '@/lib/utils'
+
+function generateUsername(displayName: string, existingUsernames: string[]): string {
+  const base = pinyin(displayName, { toneType: 'none', separator: '' })
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '')
+  if (!base) return ''
+  if (!existingUsernames.includes(base)) return base
+  let i = 1
+  while (existingUsernames.includes(`${base}${i}`)) i++
+  return `${base}${i}`
+}
 
 type User = {
   id: string
@@ -34,6 +46,7 @@ export default function UsersPage() {
   const [formPassword, setFormPassword] = useState('')
   const [formError, setFormError] = useState('')
   const [formLoading, setFormLoading] = useState(false)
+  const [resetSuccessPassword, setResetSuccessPassword] = useState('')
 
   const fetchUsers = useCallback(async () => {
     setLoading(true)
@@ -51,13 +64,20 @@ export default function UsersPage() {
 
   useEffect(() => { fetchUsers() }, [fetchUsers])
 
+  // 新建模式下：姓名变化时自动生成账号
+  useEffect(() => {
+    if (dialogMode !== 'create' || !formDisplayName.trim()) return
+    const existingUsernames = users.map(u => u.username)
+    setFormUsername(generateUsername(formDisplayName.trim(), existingUsernames))
+  }, [formDisplayName, dialogMode, users])
+
   const filtered = users.filter((u) =>
     !search || u.username.includes(search) || u.displayName.includes(search)
   )
 
   function openCreate() {
     setFormUsername(''); setFormDisplayName(''); setFormRole('operator')
-    setFormPassword(''); setFormError(''); setSelectedUser(null)
+    setFormPassword('Mcn@123456'); setFormError(''); setSelectedUser(null)
     setDialogMode('create')
   }
   function openEdit(user: User) {
@@ -65,10 +85,13 @@ export default function UsersPage() {
     setFormError(''); setSelectedUser(user); setDialogMode('edit')
   }
   function openResetPassword(user: User) {
-    setFormPassword(''); setFormError(''); setSelectedUser(user)
+    setFormPassword('Mcn@123456'); setFormError(''); setSelectedUser(user)
     setDialogMode('reset-password')
   }
-  function closeDialog() { setDialogMode(null); setSelectedUser(null); setFormError('') }
+  function closeDialog() {
+    setDialogMode(null); setSelectedUser(null)
+    setFormError(''); setResetSuccessPassword('')
+  }
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault(); setFormError('')
@@ -113,7 +136,8 @@ export default function UsersPage() {
     })
     setFormLoading(false)
     if (!res.ok) { const body = await res.json(); setFormError(body.error ?? '重置失败'); return }
-    closeDialog()
+    setResetSuccessPassword(formPassword)
+    fetchUsers()
   }
 
   async function toggleStatus(user: User) {
@@ -228,15 +252,21 @@ export default function UsersPage() {
               <>
                 <h2 className="text-lg font-bold text-gray-900 mb-6">新建账号</h2>
                 <form onSubmit={handleCreate} className="flex flex-col gap-4">
-                  <Field label="账号"><input value={formUsername} onChange={e => setFormUsername(e.target.value)} required placeholder="英文 + 数字，唯一" className="input-base" /></Field>
                   <Field label="姓名"><input value={formDisplayName} onChange={e => setFormDisplayName(e.target.value)} required placeholder="真实姓名" className="input-base" /></Field>
+                  <Field label="账号">
+                    <input value={formUsername} onChange={e => setFormUsername(e.target.value)} required placeholder="输入姓名后自动生成" className="input-base" />
+                    <p className="text-xs text-gray-400 mt-1">由姓名全拼自动生成，可手动修改</p>
+                  </Field>
                   <Field label="角色">
                     <select value={formRole} onChange={e => setFormRole(e.target.value as 'admin' | 'operator')} className="input-base">
                       <option value="operator">运营</option>
                       <option value="admin">管理员</option>
                     </select>
                   </Field>
-                  <Field label="初始密码"><input type="password" value={formPassword} onChange={e => setFormPassword(e.target.value)} required placeholder="至少 8 位，首次登录强制修改" className="input-base" /></Field>
+                  <Field label="初始密码">
+                    <input type="text" value={formPassword} onChange={e => setFormPassword(e.target.value)} required placeholder="至少 8 位，首次登录强制修改" className="input-base" />
+                    <p className="text-xs text-gray-400 mt-1">已预填默认密码，可直接修改</p>
+                  </Field>
                   {formError && <p className="text-sm text-red-500">{formError}</p>}
                   <DialogActions loading={formLoading} onCancel={closeDialog} submitLabel="创建账号" />
                 </form>
@@ -262,12 +292,38 @@ export default function UsersPage() {
             {dialogMode === 'reset-password' && selectedUser && (
               <>
                 <h2 className="text-lg font-bold text-gray-900 mb-1">重置密码</h2>
-                <p className="text-sm text-gray-400 mb-6">为「{selectedUser.displayName}」设置新密码，下次登录强制修改。</p>
-                <form onSubmit={handleResetPassword} className="flex flex-col gap-4">
-                  <Field label="新密码"><input type="password" value={formPassword} onChange={e => setFormPassword(e.target.value)} required placeholder="至少 8 位" className="input-base" /></Field>
-                  {formError && <p className="text-sm text-red-500">{formError}</p>}
-                  <DialogActions loading={formLoading} onCancel={closeDialog} submitLabel="重置密码" />
-                </form>
+                {resetSuccessPassword ? (
+                  <div className="mt-4">
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="text-green-500 text-xl">✓</span>
+                      <span className="text-gray-900 font-medium">重置成功</span>
+                    </div>
+                    <p className="text-sm text-gray-500 mb-3">
+                      「{selectedUser.displayName}」的密码已重置，请将以下密码告知本人，下次登录需修改：
+                    </p>
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 flex items-center justify-between">
+                      <span className="font-mono text-gray-900 text-sm tracking-wider">{resetSuccessPassword}</span>
+                    </div>
+                    <button
+                      onClick={closeDialog}
+                      className="mt-6 w-full py-2.5 rounded-lg text-white text-sm font-medium hover:opacity-90 transition"
+                      style={{ background: '#f59a23' }}
+                    >
+                      关闭
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-sm text-gray-400 mb-6">为「{selectedUser.displayName}」设置新密码，下次登录强制修改。</p>
+                    <form onSubmit={handleResetPassword} className="flex flex-col gap-4">
+                      <Field label="新密码">
+                        <input type="text" value={formPassword} onChange={e => setFormPassword(e.target.value)} required placeholder="至少 8 位" className="input-base" />
+                      </Field>
+                      {formError && <p className="text-sm text-red-500">{formError}</p>}
+                      <DialogActions loading={formLoading} onCancel={closeDialog} submitLabel="重置密码" />
+                    </form>
+                  </>
+                )}
               </>
             )}
           </div>

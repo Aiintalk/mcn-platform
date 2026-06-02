@@ -27,7 +27,8 @@ export const authOptions: NextAuthOptions = {
           where: { username: credentials.username },
         })
 
-        if (!user || user.status !== 'active') return null
+        if (!user) return null
+        if (user.status !== 'active') throw new Error('ACCOUNT_DISABLED')
 
         const passwordValid = await bcrypt.compare(credentials.password, user.passwordHash)
         if (!passwordValid) return null

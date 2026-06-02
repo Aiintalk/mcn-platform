@@ -25,7 +25,11 @@ export default function LoginPage() {
     setLoading(false)
 
     if (result?.error) {
-      setError('账号或密码错误')
+      if (result.error === 'ACCOUNT_DISABLED') {
+        setError('账号已停用，请联系管理员')
+      } else {
+        setError('账号或密码错误')
+      }
       return
     }
 

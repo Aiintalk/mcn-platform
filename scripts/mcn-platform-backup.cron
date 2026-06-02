@@ -1,0 +1,9 @@
+# 部署路径：/etc/cron.d/mcn-platform-backup
+# 部署步骤：
+#   sudo cp scripts/mcn-platform-backup.cron /etc/cron.d/mcn-platform-backup
+#   sudo mkdir -p /backup && sudo chown postgres:postgres /backup
+#
+# 每天凌晨 3 点备份，保留最近 7 天
+0 3 * * * postgres pg_dump mcn_platform | gzip > /backup/mcn_platform_$(date +\%Y\%m\%d).sql.gz
+# 清理 7 天前的备份
+0 4 * * * postgres find /backup -name "mcn_platform_*.sql.gz" -mtime +7 -delete
