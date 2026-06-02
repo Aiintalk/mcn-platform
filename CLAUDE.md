@@ -67,8 +67,21 @@ postgresql://user:pass@localhost:5432/mcn_platform?connection_limit=5&pool_timeo
 ## Deployment
 
 ```bash
-bash scripts/deploy.sh   # pull → install → db:deploy → build → pm2 reload
+bash scripts/deploy.sh   # pull → install → prisma generate → db:deploy → build → pm2 reload
 ```
 
-PM2 config: `ecosystem.config.js` (cluster mode, 4 workers)
+PM2 config: `ecosystem.config.js` (fork mode, 1 instance — Next.js 14 does not support cluster mode)
 Nginx config: `nginx/mcn-platform.conf`
+
+**Seed accounts** (`pnpm db:seed`)
+
+| Username | Password | Role |
+|---|---|---|
+| `admin` | `admin123` | admin（forced password change on first login） |
+| `operator01` | `Operator@123` | operator |
+| `operator02` | `Operator@456` | operator |
+
+**Production deployment notes**
+- Prisma reads `.env` by default, not `.env.production` — `deploy.sh` auto-copies `.env.production` → `.env` if `.env` is missing
+- After `pnpm install`, run `npx prisma generate` before `db:deploy` or `db:seed`
+- PostgreSQL 15: grant schema permissions explicitly — `GRANT ALL ON SCHEMA public TO <user>`

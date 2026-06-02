@@ -4,14 +4,14 @@ import bcrypt from 'bcryptjs'
 const prisma = new PrismaClient()
 
 async function main() {
-  // 超管账号
-  const adminHash = await bcrypt.hash('Admin@123456', 12)
+  // 超管账号（文档测试账号：admin / admin123）
+  const adminHash = await bcrypt.hash('admin123', 12)
   const admin = await prisma.user.upsert({
-    where: { username: 'zhangchong' },
+    where: { username: 'admin' },
     update: {},
     create: {
-      username: 'zhangchong',
-      displayName: '张冲',
+      username: 'admin',
+      displayName: '管理员',
       passwordHash: adminHash,
       role: Role.admin,
       status: UserStatus.active,

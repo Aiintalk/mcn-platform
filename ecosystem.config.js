@@ -1,11 +1,11 @@
 module.exports = {
   apps: [{
     name: 'mcn-web',
-    script: 'node_modules/.bin/next',
+    script: 'node_modules/next/dist/bin/next',
     args: 'start',
-    cwd: './apps/web',
-    instances: 4,
-    exec_mode: 'cluster',
+    cwd: '/opt/dev/mcn-platform/apps/web',
+    instances: 1,
+    exec_mode: 'fork',
     max_memory_restart: '1G',
     env_production: {
       NODE_ENV: 'production',
