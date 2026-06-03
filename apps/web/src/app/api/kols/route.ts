@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAuth } from '@/lib/api-helpers'
+import { ok, err, requireAuth, requireAdmin } from '@/lib/api-helpers'
 import { KolStatus } from '@prisma/client'
 
 // GET /api/kols — 红人列表
@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
 
 // POST /api/kols — 创建红人
 export async function POST(req: NextRequest) {
-  const { session, res } = await requireAuth()
+  const { session, res } = await requireAdmin()
   if (res) return res
 
   let body: unknown

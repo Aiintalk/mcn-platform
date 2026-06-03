@@ -43,20 +43,16 @@ export async function GET(_req: NextRequest, { params }: Params) {
   })
 }
 
-// PATCH /api/kols/[id] — 编辑红人
+// PATCH /api/kols/[id] — 编辑红人（仅管理员）
 export async function PATCH(req: NextRequest, { params }: Params) {
-  const { session, res } = await requireAuth()
+  const { session, res } = await requireAdmin()
   if (res) return res
 
   const id = BigInt(params.id)
   const kol = await prisma.kol.findUnique({ where: { id } })
   if (!kol) return err('红人不存在', 404)
 
-  // 运营只能编辑自己负责的红人；管理员不限制
   const isAdmin = session!.user.role === 'admin'
-  if (!isAdmin && kol.ownerId?.toString() !== session!.user.id) {
-    return err('无权编辑该红人', 403)
-  }
 
   let body: unknown
   try {
