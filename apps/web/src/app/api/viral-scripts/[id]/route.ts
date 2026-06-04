@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAuth, requireAdmin } from '@/lib/api-helpers'
+import { ok, err, requireAuth, requireAdmin, parseBigIntId, isValidHttpUrl, parseSafeDate } from '@/lib/api-helpers'
 import { ViralScriptType } from '@prisma/client'
 
 type Params = { params: { id: string } }
@@ -59,7 +59,9 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const { res } = await requireAuth()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const script = await prisma.viralScript.findUnique({
     where: { id },
     select: SELECT_DETAIL,
@@ -74,7 +76,9 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   const { res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const existing = await prisma.viralScript.findUnique({ where: { id } })
   if (!existing) return err('爆款不存在', 404)
 
@@ -98,22 +102,61 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     }
     updateData.type = type as ViralScriptType
   }
-  if (title !== undefined) updateData.title = title
-  if (sourceUrl !== undefined) updateData.sourceUrl = sourceUrl
-  if (platform !== undefined) updateData.platform = platform
+  if (title !== undefined) {
+    if (title !== null && typeof title !== 'string') return err('title 必须为字符串', 400)
+    updateData.title = title as string | null
+  }
+  if (sourceUrl !== undefined) {
+    if (sourceUrl !== null && (typeof sourceUrl !== 'string' || !isValidHttpUrl(sourceUrl))) return err('sourceUrl 必须为 http/https URL', 400)
+    updateData.sourceUrl = sourceUrl as string | null
+  }
+  if (platform !== undefined) {
+    if (platform !== null && typeof platform !== 'string') return err('platform 必须为字符串', 400)
+    updateData.platform = platform as string | null
+  }
   if (diggCount !== undefined) {
-    updateData.diggCount = diggCount != null ? BigInt(diggCount as number) : null
+    if (diggCount !== null) {
+      const raw = String(diggCount)
+      if (!/^\d+$/.test(raw)) return err('diggCount 必须为非负整数', 400)
+      updateData.diggCount = BigInt(raw)
+    } else {
+      updateData.diggCount = null
+    }
   }
   if (publishAt !== undefined) {
-    updateData.publishAt = publishAt != null ? new Date(publishAt as string) : null
+    if (publishAt === null) {
+      updateData.publishAt = null
+    } else {
+      const parsed = parseSafeDate(publishAt)
+      if (parsed === null) return err('publishAt 日期格式无效', 400)
+      updateData.publishAt = parsed
+    }
   }
-  if (transcript !== undefined) updateData.transcript = transcript
-  if (structureMd !== undefined) updateData.structureMd = structureMd
+  if (transcript !== undefined) {
+    if (transcript !== null && typeof transcript !== 'string') return err('transcript 必须为字符串', 400)
+    updateData.transcript = transcript as string | null
+  }
+  if (structureMd !== undefined) {
+    if (structureMd !== null && typeof structureMd !== 'string') return err('structureMd 必须为字符串', 400)
+    updateData.structureMd = structureMd as string | null
+  }
   if (kolId !== undefined) {
-    updateData.kolId = kolId != null ? BigInt(kolId as string) : null
+    if (kolId !== null) {
+      const parsed = parseBigIntId(String(kolId))
+      if (parsed === null) return err('kolId 无效', 400)
+      updateData.kolId = parsed
+    } else {
+      updateData.kolId = null
+    }
   }
   if (productId !== undefined) {
-    updateData.productId = productId != null ? BigInt(productId as string) : null
+    if (productId !== null) {
+      const parsed = parseBigIntId(String(productId))
+      if (parsed === null) return err('productId 无效', 400)
+      updateData.productId = parsed
+    } else {
+      updateData.productId = null
+    }
   }
 
   if (Object.keys(updateData).length === 0) {
@@ -134,7 +177,9 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const { res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const existing = await prisma.viralScript.findUnique({ where: { id } })
   if (!existing) return err('爆款不存在', 404)
 

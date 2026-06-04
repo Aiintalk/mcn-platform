@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAuth, requireAdmin } from '@/lib/api-helpers'
+import { ok, err, requireAuth, requireAdmin, parseBigIntId } from '@/lib/api-helpers'
 
 type Params = { params: { id: string } }
 
@@ -9,7 +9,9 @@ export async function GET(req: NextRequest, { params }: Params) {
   const { res } = await requireAuth()
   if (res) return res
 
-  const kolId = BigInt(params.id)
+  const kolId = parseBigIntId(params.id)
+  if (kolId === null) return err('无效 ID', 400)
+
   const kol = await prisma.kol.findUnique({ where: { id: kolId } })
   if (!kol) return err('红人不存在', 404)
 
@@ -48,7 +50,9 @@ export async function POST(req: NextRequest, { params }: Params) {
   const { session, res } = await requireAdmin()
   if (res) return res
 
-  const kolId = BigInt(params.id)
+  const kolId = parseBigIntId(params.id)
+  if (kolId === null) return err('无效 ID', 400)
+
   const kol = await prisma.kol.findUnique({ where: { id: kolId } })
   if (!kol) return err('红人不存在', 404)
 
@@ -61,13 +65,20 @@ export async function POST(req: NextRequest, { params }: Params) {
 
   const { type, title, source, diggCount, content } = body as Record<string, unknown>
 
+  let diggCountBigInt: bigint | undefined
+  if (diggCount != null) {
+    const raw = String(diggCount)
+    if (!/^\d+$/.test(raw)) return err('diggCount 必须为非负整数', 400)
+    diggCountBigInt = BigInt(raw)
+  }
+
   const material = await prisma.material.create({
     data: {
       kolId,
       type: type as string | undefined,
       title: title as string | undefined,
       source: source as string | undefined,
-      diggCount: diggCount != null ? BigInt(diggCount as number) : undefined,
+      diggCount: diggCountBigInt,
       content: content as string | undefined,
       uploadedById: BigInt(session!.user.id),
     },

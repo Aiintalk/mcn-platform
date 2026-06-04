@@ -5,7 +5,7 @@
 
 set -e  # 遇到错误立即退出
 
-PROJECT_DIR="/opt/mcn-platform"
+PROJECT_DIR="/opt/dev/mcn-platform"
 APP_NAME="mcn-web"
 LOG_TAG="[deploy]"
 
@@ -39,6 +39,12 @@ pnpm install --frozen-lockfile || fail "pnpm install 失败"
 
 # ── Step 3: 数据库迁移 ────────────────────────────────────
 log "Step 3/5: 执行数据库迁移..."
+# Prisma 默认只读 .env，生产环境用 .env.production 需手动同步
+if [ -f "apps/web/.env.production" ] && [ ! -f "apps/web/.env" ]; then
+  cp apps/web/.env.production apps/web/.env
+  log ".env.production → .env 已同步"
+fi
+cd apps/web && npx prisma generate && cd ../..
 pnpm db:deploy || fail "数据库迁移失败，请检查 DATABASE_URL 配置"
 
 # ── Step 4: 构建 ──────────────────────────────────────────

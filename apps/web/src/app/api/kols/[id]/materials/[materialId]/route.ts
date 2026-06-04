@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAdmin } from '@/lib/api-helpers'
+import { ok, err, requireAdmin, parseBigIntId } from '@/lib/api-helpers'
 
 type Params = { params: { id: string; materialId: string } }
 
@@ -9,8 +9,11 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const { res } = await requireAdmin()
   if (res) return res
 
-  const kolId = BigInt(params.id)
-  const materialId = BigInt(params.materialId)
+  const kolId = parseBigIntId(params.id)
+  if (kolId === null) return err('无效 ID', 400)
+
+  const materialId = parseBigIntId(params.materialId)
+  if (materialId === null) return err('无效 materialId', 400)
 
   const material = await prisma.material.findUnique({ where: { id: materialId } })
   if (!material) return err('素材不存在', 404)

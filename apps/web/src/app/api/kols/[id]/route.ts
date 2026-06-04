@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAuth, requireAdmin } from '@/lib/api-helpers'
+import { ok, err, requireAuth, requireAdmin, parseBigIntId, isValidHttpUrl } from '@/lib/api-helpers'
 import { KolStatus } from '@prisma/client'
 
 type Params = { params: { id: string } }
@@ -10,7 +10,9 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const { res } = await requireAuth()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const kol = await prisma.kol.findUnique({
     where: { id },
     select: {
@@ -43,20 +45,18 @@ export async function GET(_req: NextRequest, { params }: Params) {
   })
 }
 
-// PATCH /api/kols/[id] — 编辑红人
+// PATCH /api/kols/[id] — 编辑红人（仅管理员）
 export async function PATCH(req: NextRequest, { params }: Params) {
-  const { session, res } = await requireAuth()
+  const { session, res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const kol = await prisma.kol.findUnique({ where: { id } })
   if (!kol) return err('红人不存在', 404)
 
-  // 运营只能编辑自己负责的红人；管理员不限制
   const isAdmin = session!.user.role === 'admin'
-  if (!isAdmin && kol.ownerId?.toString() !== session!.user.id) {
-    return err('无权编辑该红人', 403)
-  }
 
   let body: unknown
   try {
@@ -73,17 +73,36 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     if (typeof name !== 'string' || !name.trim()) return err('name 不能为空', 400)
     updateData.name = name.trim()
   }
-  if (douyinId !== undefined) updateData.douyinId = douyinId
-  if (douyinUrl !== undefined) updateData.douyinUrl = douyinUrl
-  if (secUserId !== undefined) updateData.secUserId = secUserId
-  if (avatarUrl !== undefined) updateData.avatarUrl = avatarUrl
+  if (douyinId !== undefined) {
+    if (douyinId !== null && typeof douyinId !== 'string') return err('douyinId 必须为字符串', 400)
+    updateData.douyinId = douyinId as string | null
+  }
+  if (douyinUrl !== undefined) {
+    if (douyinUrl !== null && (typeof douyinUrl !== 'string' || !isValidHttpUrl(douyinUrl))) return err('douyinUrl 必须为 http/https URL', 400)
+    updateData.douyinUrl = douyinUrl as string | null
+  }
+  if (secUserId !== undefined) {
+    if (secUserId !== null && typeof secUserId !== 'string') return err('secUserId 必须为字符串', 400)
+    updateData.secUserId = secUserId as string | null
+  }
+  if (avatarUrl !== undefined) {
+    if (avatarUrl !== null && (typeof avatarUrl !== 'string' || !isValidHttpUrl(avatarUrl))) return err('avatarUrl 必须为 http/https URL', 400)
+    updateData.avatarUrl = avatarUrl as string | null
+  }
   if (tags !== undefined) {
     if (!Array.isArray(tags)) return err('tags 必须为数组', 400)
+    if (tags.length > 20) return err('tags 最多 20 个', 400)
+    for (const t of tags) {
+      if (typeof t !== 'string') return err('tags 每项必须为字符串', 400)
+      if (t.length > 50) return err('tags 每项长度不超过 50 个字符', 400)
+    }
     updateData.tags = tags
   }
   if (ownerId !== undefined) {
     if (!isAdmin) return err('只有管理员才能转移红人归属', 403)
-    updateData.ownerId = BigInt(ownerId as string)
+    const ownerBigInt = parseBigIntId(String(ownerId))
+    if (ownerBigInt === null) return err('ownerId 无效', 400)
+    updateData.ownerId = ownerBigInt
   }
   if (status !== undefined) {
     if (!Object.values(KolStatus).includes(status as KolStatus)) return err('status 无效', 400)
@@ -124,7 +143,9 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const { res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const kol = await prisma.kol.findUnique({ where: { id } })
   if (!kol) return err('红人不存在', 404)
 

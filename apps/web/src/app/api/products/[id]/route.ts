@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAuth, requireAdmin } from '@/lib/api-helpers'
+import { ok, err, requireAuth, requireAdmin, parseBigIntId } from '@/lib/api-helpers'
 import { ProductStatus, Prisma } from '@prisma/client'
 
 type Params = { params: { id: string } }
@@ -10,7 +10,9 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const { res } = await requireAuth()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const product = await prisma.product.findUnique({
     where: { id },
     select: {
@@ -60,7 +62,9 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   const { res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const product = await prisma.product.findUnique({ where: { id } })
   if (!product) return err('产品不存在', 404)
 
@@ -128,7 +132,9 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const { res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const product = await prisma.product.findUnique({ where: { id } })
   if (!product) return err('产品不存在', 404)
 
