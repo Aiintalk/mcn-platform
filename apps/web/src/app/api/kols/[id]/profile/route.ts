@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAuth, requireAdmin } from '@/lib/api-helpers'
+import { ok, err, requireAuth, requireAdmin, parseBigIntId, isValidHttpUrl } from '@/lib/api-helpers'
 
 type Params = { params: { id: string } }
 
@@ -9,7 +9,9 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const { res } = await requireAuth()
   if (res) return res
 
-  const kolId = BigInt(params.id)
+  const kolId = parseBigIntId(params.id)
+  if (kolId === null) return err('无效 ID', 400)
+
   const kol = await prisma.kol.findUnique({ where: { id: kolId } })
   if (!kol) return err('红人不存在', 404)
 
@@ -41,7 +43,9 @@ export async function POST(req: NextRequest, { params }: Params) {
   const { session, res } = await requireAdmin()
   if (res) return res
 
-  const kolId = BigInt(params.id)
+  const kolId = parseBigIntId(params.id)
+  if (kolId === null) return err('无效 ID', 400)
+
   const kol = await prisma.kol.findUnique({ where: { id: kolId } })
   if (!kol) return err('红人不存在', 404)
 
@@ -54,14 +58,18 @@ export async function POST(req: NextRequest, { params }: Params) {
 
   const { soulMd, contentPlanMd, sourceFileUrl } = body as Record<string, unknown>
 
-  const latest = await prisma.kolProfile.findFirst({
-    where: { kolId },
-    orderBy: { version: 'desc' },
-    select: { version: true },
-  })
-  const nextVersion = (latest?.version ?? 0) + 1
+  if (sourceFileUrl != null && !isValidHttpUrl(sourceFileUrl)) {
+    return err('sourceFileUrl 必须为 http/https URL', 400)
+  }
 
   const profile = await prisma.$transaction(async (tx) => {
+    const latest = await tx.kolProfile.findFirst({
+      where: { kolId },
+      orderBy: { version: 'desc' },
+      select: { version: true },
+    })
+    const nextVersion = (latest?.version ?? 0) + 1
+
     await tx.kolProfile.updateMany({
       where: { kolId, isCurrent: true },
       data: { isCurrent: false },

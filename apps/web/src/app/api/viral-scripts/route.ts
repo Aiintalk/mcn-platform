@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAuth } from '@/lib/api-helpers'
+import { ok, err, requireAuth, parseBigIntId, isValidHttpUrl, parseSafeDate } from '@/lib/api-helpers'
 import { ViralScriptType } from '@prisma/client'
 
 const VALID_TYPES = Object.values(ViralScriptType)
@@ -14,17 +14,23 @@ export async function GET(req: NextRequest) {
   const page = Math.max(1, parseInt(searchParams.get('page') ?? '1'))
   const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get('pageSize') ?? '20')))
   const type = searchParams.get('type') as ViralScriptType | null
-  const kolId = searchParams.get('kolId')
-  const productId = searchParams.get('productId')
+  const kolIdRaw = searchParams.get('kolId')
+  const productIdRaw = searchParams.get('productId')
 
   if (type && !VALID_TYPES.includes(type)) {
     return err(`type 无效，支持: ${VALID_TYPES.join(', ')}`, 400)
   }
 
+  const kolBigInt = kolIdRaw ? parseBigIntId(kolIdRaw) : null
+  if (kolIdRaw && kolBigInt === null) return err('kolId 无效', 400)
+
+  const productBigInt = productIdRaw ? parseBigIntId(productIdRaw) : null
+  if (productIdRaw && productBigInt === null) return err('productId 无效', 400)
+
   const where = {
     ...(type ? { type } : {}),
-    ...(kolId ? { kolId: BigInt(kolId) } : {}),
-    ...(productId ? { productId: BigInt(productId) } : {}),
+    ...(kolBigInt ? { kolId: kolBigInt } : {}),
+    ...(productBigInt ? { productId: productBigInt } : {}),
   }
 
   const [total, scripts] = await Promise.all([
@@ -87,6 +93,41 @@ export async function POST(req: NextRequest) {
   if (!type || !VALID_TYPES.includes(type as ViralScriptType)) {
     return err(`type 为必填，支持: ${VALID_TYPES.join(', ')}`, 400)
   }
+  if (title !== undefined && title !== null && typeof title !== 'string') {
+    return err('title 必须为字符串', 400)
+  }
+  if (platform !== undefined && platform !== null && typeof platform !== 'string') {
+    return err('platform 必须为字符串', 400)
+  }
+  if (transcript !== undefined && transcript !== null && typeof transcript !== 'string') {
+    return err('transcript 必须为字符串', 400)
+  }
+  if (structureMd !== undefined && structureMd !== null && typeof structureMd !== 'string') {
+    return err('structureMd 必须为字符串', 400)
+  }
+  if (sourceUrl != null && !isValidHttpUrl(sourceUrl)) {
+    return err('sourceUrl 必须为 http/https URL', 400)
+  }
+
+  let publishAtDate: Date | undefined
+  if (publishAt != null) {
+    const parsed = parseSafeDate(publishAt)
+    if (parsed === null) return err('publishAt 日期格式无效', 400)
+    publishAtDate = parsed
+  }
+
+  const kolBigInt = kolId != null ? parseBigIntId(String(kolId)) : null
+  if (kolId != null && kolBigInt === null) return err('kolId 无效', 400)
+
+  const productBigInt = productId != null ? parseBigIntId(String(productId)) : null
+  if (productId != null && productBigInt === null) return err('productId 无效', 400)
+
+  let diggCountBigInt: bigint | undefined
+  if (diggCount != null) {
+    const raw = String(diggCount)
+    if (!/^\d+$/.test(raw)) return err('diggCount 必须为非负整数', 400)
+    diggCountBigInt = BigInt(raw)
+  }
 
   const script = await prisma.viralScript.create({
     data: {
@@ -94,12 +135,12 @@ export async function POST(req: NextRequest) {
       title: title as string | undefined,
       sourceUrl: sourceUrl as string | undefined,
       platform: platform as string | undefined,
-      diggCount: diggCount != null ? BigInt(diggCount as number) : undefined,
-      publishAt: publishAt ? new Date(publishAt as string) : undefined,
+      diggCount: diggCountBigInt,
+      publishAt: publishAtDate,
       transcript: transcript as string | undefined,
       structureMd: structureMd as string | undefined,
-      kolId: kolId ? BigInt(kolId as string) : undefined,
-      productId: productId ? BigInt(productId as string) : undefined,
+      kolId: kolBigInt ?? undefined,
+      productId: productBigInt ?? undefined,
       uploadedById: BigInt(session!.user.id),
     },
     select: {
