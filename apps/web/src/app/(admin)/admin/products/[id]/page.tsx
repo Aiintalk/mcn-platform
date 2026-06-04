@@ -70,7 +70,7 @@ export default function ProductDetailPage() {
     if (!product) return
     setEditName(product.name)
     setEditCategory(product.category ?? '')
-    setEditPrice(String(product.price))
+    setEditPrice(product.price != null ? String(product.price) : '')
     setEditTargetAudience(product.targetAudience ?? '')
     setEditScenario(product.scenario ?? '')
     setEditError('')

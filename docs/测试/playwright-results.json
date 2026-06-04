@@ -1,0 +1,2999 @@
+{
+  "config": {
+    "configFile": "D:\\2026年工作\\AI相关\\AI工具箱新架构方案\\aiintalk\\mcn-platform\\apps\\web\\playwright.config.ts",
+    "rootDir": "D:/2026年工作/AI相关/AI工具箱新架构方案/aiintalk/mcn-platform/apps/web/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "D:\\2026年工作\\AI相关\\AI工具箱新架构方案\\aiintalk\\mcn-platform\\apps\\web\\e2e\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/2026年工作/AI相关/AI工具箱新架构方案/aiintalk/mcn-platform/apps/web/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "auth",
+        "name": "auth",
+        "testDir": "D:/2026年工作/AI相关/AI工具箱新架构方案/aiintalk/mcn-platform/apps/web/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/auth.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/2026年工作/AI相关/AI工具箱新架构方案/aiintalk/mcn-platform/apps/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "admin",
+        "name": "admin",
+        "testDir": "D:/2026年工作/AI相关/AI工具箱新架构方案/aiintalk/mcn-platform/apps/web/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/kols.spec.ts",
+          "**/products.spec.ts",
+          "**/viral-scripts.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/2026年工作/AI相关/AI工具箱新架构方案/aiintalk/mcn-platform/apps/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "security",
+        "name": "security",
+        "testDir": "D:/2026年工作/AI相关/AI工具箱新架构方案/aiintalk/mcn-platform/apps/web/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/security.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "../../docs/测试/playwright-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../docs/测试/playwright-results.json"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "auth.spec.ts",
+      "file": "auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M1 — 登录流程",
+          "file": "auth.spec.ts",
+          "line": 19,
+          "column": 6,
+          "specs": [
+            {
+              "title": "正常登录 — operator01",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1015,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:42.062Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-6113de0a1d32f95c7b66",
+              "file": "auth.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "错误密码 — 显示错误提示",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1027,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:43.429Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-b2bfd3f67acc8150bcbd",
+              "file": "auth.spec.ts",
+              "line": 26,
+              "column": 7
+            },
+            {
+              "title": "空用户名 — 浏览器 required 阻止提交",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 640,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:44.464Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-62af0bff399214cb6e6e",
+              "file": "auth.spec.ts",
+              "line": 33,
+              "column": 7
+            },
+            {
+              "title": "未登录访问 /admin/kols — 跳转 /login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 776,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:45.113Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-67195cb3159a7fb083b1",
+              "file": "auth.spec.ts",
+              "line": 40,
+              "column": 7
+            },
+            {
+              "title": "未登录访问 / — 跳转 /login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 742,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:45.898Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-9375e8e1cd4cf9d89529",
+              "file": "auth.spec.ts",
+              "line": 45,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M1 — 强制改密流程",
+          "file": "auth.spec.ts",
+          "line": 54,
+          "column": 6,
+          "specs": [
+            {
+              "title": "admin 首次登录跳转改密页",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "D:\\2026年工作\\AI相关\\AI工具箱新架构方案\\aiintalk\\mcn-platform\\apps\\web\\e2e\\auth.spec.ts",
+                        "line": 61,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 2746,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:46.646Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "D:\\2026年工作\\AI相关\\AI工具箱新架构方案\\aiintalk\\mcn-platform\\apps\\web\\e2e\\auth.spec.ts",
+                            "line": 61,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-201352a09a2e4af20d8d",
+              "file": "auth.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "改密页填写新密码后跳转登录 → 再登录成功",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3478,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:49.402Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-d847ed5d1303fd49de6e",
+              "file": "auth.spec.ts",
+              "line": 67,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M1 — 权限拦截：运营不可访问 admin",
+          "file": "auth.spec.ts",
+          "line": 110,
+          "column": 6,
+          "specs": [
+            {
+              "title": "运营访问 /admin/kols — 被拦截（403 或跳转）",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 957,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:52.888Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-d17b0daf54cb75af80bb",
+              "file": "auth.spec.ts",
+              "line": 116,
+              "column": 7
+            },
+            {
+              "title": "运营访问 /admin/users — 被拦截",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 988,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:53.855Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-e0c37303f7b293f5c62c",
+              "file": "auth.spec.ts",
+              "line": 121,
+              "column": 7
+            },
+            {
+              "title": "运营访问 /admin/products — 被拦截",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1016,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:54.856Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-99c0e34658aed6ac13bc",
+              "file": "auth.spec.ts",
+              "line": 126,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M1 — 登出",
+          "file": "auth.spec.ts",
+          "line": 135,
+          "column": 6,
+          "specs": [
+            {
+              "title": "admin 登出后跳转到 /login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "auth",
+                  "projectName": "auth",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1618,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:55.881Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-70897694dc982a1fd642",
+              "file": "auth.spec.ts",
+              "line": 137,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "kols.spec.ts",
+      "file": "kols.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M2 — 红人列表",
+          "file": "kols.spec.ts",
+          "line": 26,
+          "column": 6,
+          "specs": [
+            {
+              "title": "管理员可访问 /admin/kols，展示列表和分页",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1198,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:58.269Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-5f628affff1e2bc14cf4",
+              "file": "kols.spec.ts",
+              "line": 33,
+              "column": 7
+            },
+            {
+              "title": "按「已归档」筛选只显示归档红人",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1358,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:11:59.857Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-ca958208938d30dbb356",
+              "file": "kols.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "搜索框输入关键词过滤列表",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1138,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:01.225Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-ec38b8b8921bc6f5b396",
+              "file": "kols.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "点击红人行跳转到详情页",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1391,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:02.372Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-907c616214681de7bcd8",
+              "file": "kols.spec.ts",
+              "line": 60,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 新建红人（admin）",
+          "file": "kols.spec.ts",
+          "line": 74,
+          "column": 6,
+          "specs": [
+            {
+              "title": "填写姓名后提交 — 创建成功并跳转详情页",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 893,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:03.774Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-c4127022c851665817e4",
+              "file": "kols.spec.ts",
+              "line": 76,
+              "column": 7
+            },
+            {
+              "title": "不填姓名直接提交 — 表单报错不提交",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 559,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:04.677Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-412b032a341c151e5d6e",
+              "file": "kols.spec.ts",
+              "line": 87,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 新建红人（operator 权限）",
+          "file": "kols.spec.ts",
+          "line": 98,
+          "column": 6,
+          "specs": [
+            {
+              "title": "运营无法访问 /admin/kols/new",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 188,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:05.246Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-9d8da02cb06986f6c07d",
+              "file": "kols.spec.ts",
+              "line": 102,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 红人详情 · 人格档案",
+          "file": "kols.spec.ts",
+          "line": 115,
+          "column": 6,
+          "specs": [
+            {
+              "title": "打开详情页 — 人格档案 Tab 可见",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1307,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:05.445Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-30f4a853363dc44b542d",
+              "file": "kols.spec.ts",
+              "line": 129,
+              "column": 7
+            },
+            {
+              "title": "上传 .md 文件 — 上传成功提示",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1369,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:06.766Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-f1f0272569072ac75103",
+              "file": "kols.spec.ts",
+              "line": 136,
+              "column": 7
+            },
+            {
+              "title": "上传非法格式（.txt）— 显示错误提示",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1284,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:08.148Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-3318df4f002d69d46168",
+              "file": "kols.spec.ts",
+              "line": 154,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 红人详情 · 历史版本",
+          "file": "kols.spec.ts",
+          "line": 176,
+          "column": 6,
+          "specs": [
+            {
+              "title": "历史版本 Tab 显示两条记录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1395,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:09.450Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-d1df56fad777d006aeb7",
+              "file": "kols.spec.ts",
+              "line": 196,
+              "column": 7
+            },
+            {
+              "title": "点击历史版本可预览内容",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1434,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:10.853Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-b422bebfc2d5d5a37bce",
+              "file": "kols.spec.ts",
+              "line": 211,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 归档红人",
+          "file": "kols.spec.ts",
+          "line": 234,
+          "column": 6,
+          "specs": [
+            {
+              "title": "点击「归档」并确认后红人从 active 列表消失",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1396,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:12.294Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-ef22073712a0af9f89b3",
+              "file": "kols.spec.ts",
+              "line": 246,
+              "column": 7
+            },
+            {
+              "title": "筛选「已归档」后被归档的红人出现",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "D:\\2026年工作\\AI相关\\AI工具箱新架构方案\\aiintalk\\mcn-platform\\apps\\web\\e2e\\kols.spec.ts",
+                        "line": 281,
+                        "column": 43
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 1279,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:13.699Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "D:\\2026年工作\\AI相关\\AI工具箱新架构方案\\aiintalk\\mcn-platform\\apps\\web\\e2e\\kols.spec.ts",
+                            "line": 281,
+                            "column": 43
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-672476239af3c0c42094",
+              "file": "kols.spec.ts",
+              "line": 275,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 运营端首页",
+          "file": "kols.spec.ts",
+          "line": 292,
+          "column": 6,
+          "specs": [
+            {
+              "title": "运营进入首页，不在 /login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1202,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:14.988Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-d3ef30d7748d6fed96f1",
+              "file": "kols.spec.ts",
+              "line": 296,
+              "column": 7
+            },
+            {
+              "title": "运营首页无「新建」入口",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1165,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:16.198Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79ce21e9eaa7fee19d53-72fc6c4f0c5dc2310fd6",
+              "file": "kols.spec.ts",
+              "line": 302,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "products.spec.ts",
+      "file": "products.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M2 — 产品列表",
+          "file": "products.spec.ts",
+          "line": 49,
+          "column": 6,
+          "specs": [
+            {
+              "title": "管理员访问 /admin/products 展示产品列表",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1145,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:17.379Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-a560da58f6382ddd7ec7",
+              "file": "products.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "点击产品行跳转到详情页",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1635,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:18.535Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-28ec2f0f3aa2a8615db4",
+              "file": "products.spec.ts",
+              "line": 62,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 新建产品（admin）",
+          "file": "products.spec.ts",
+          "line": 76,
+          "column": 6,
+          "specs": [
+            {
+              "title": "填写产品名后提交 — 创建成功跳转详情页",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 779,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:20.179Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-042ae8984596809bfc81",
+              "file": "products.spec.ts",
+              "line": 78,
+              "column": 7
+            },
+            {
+              "title": "不填产品名直接提交 — 表单报错",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 535,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:20.965Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-feacc29d87c3c0aa25a4",
+              "file": "products.spec.ts",
+              "line": 90,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 新建产品（operator 权限）",
+          "file": "products.spec.ts",
+          "line": 102,
+          "column": 6,
+          "specs": [
+            {
+              "title": "运营无法访问 /admin/products/new",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 181,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:21.506Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-3fc9278a5f454d12ba6e",
+              "file": "products.spec.ts",
+              "line": 106,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 产品详情 · 编辑",
+          "file": "products.spec.ts",
+          "line": 119,
+          "column": 6,
+          "specs": [
+            {
+              "title": "「编辑」按钮可打开弹窗并保存",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1392,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:21.693Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-d44503292d55c9561587",
+              "file": "products.spec.ts",
+              "line": 133,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 产品详情 · 卖点",
+          "file": "products.spec.ts",
+          "line": 163,
+          "column": 6,
+          "specs": [
+            {
+              "title": "产品详情页展示三个卖点区块",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1312,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:23.092Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-6d6f896a49b894b592ab",
+              "file": "products.spec.ts",
+              "line": 176,
+              "column": 7
+            },
+            {
+              "title": "上传 .md 卖点文档 — 解析成功并提示",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1371,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:24.415Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-49b2f4039747b7c90ab3",
+              "file": "products.spec.ts",
+              "line": 186,
+              "column": 7
+            },
+            {
+              "title": "上传非法格式（.txt）— 显示错误提示",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1293,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:25.793Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-c8a8d41cfacd2bcced5b",
+              "file": "products.spec.ts",
+              "line": 200,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 删除产品",
+          "file": "products.spec.ts",
+          "line": 218,
+          "column": 6,
+          "specs": [
+            {
+              "title": "点击「删除」确认后跳转到产品列表",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1549,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:27.096Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-79e67e81017398447bbe",
+              "file": "products.spec.ts",
+              "line": 231,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 运营端产品只读",
+          "file": "products.spec.ts",
+          "line": 251,
+          "column": 6,
+          "specs": [
+            {
+              "title": "运营调用 PATCH /api/products/[id] — 返回 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 182,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:28.656Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "000c94276132c4f97581-344bd33427b6a37cacf2",
+              "file": "products.spec.ts",
+              "line": 255,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "viral-scripts.spec.ts",
+      "file": "viral-scripts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M2 — 爆款库基础结构",
+          "file": "viral-scripts.spec.ts",
+          "line": 30,
+          "column": 6,
+          "specs": [
+            {
+              "title": "访问 /admin/viral-scripts 展示 4 个类型 Tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1200,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:28.850Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "606625eb4cf617823ae1-3ad42d62fe1777177807",
+              "file": "viral-scripts.spec.ts",
+              "line": 37,
+              "column": 7
+            },
+            {
+              "title": "切换 Tab — 列表内容按类型更新",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1158,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:30.059Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "606625eb4cf617823ae1-31d63407fe72163616c6",
+              "file": "viral-scripts.spec.ts",
+              "line": 46,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 新建爆款记录",
+          "file": "viral-scripts.spec.ts",
+          "line": 61,
+          "column": 6,
+          "specs": [
+            {
+              "title": "新建「人设爆款」记录 — 出现在列表中",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1341,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:31.225Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "606625eb4cf617823ae1-c7a742d1501211ab521d",
+              "file": "viral-scripts.spec.ts",
+              "line": 71,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 编辑爆款记录",
+          "file": "viral-scripts.spec.ts",
+          "line": 122,
+          "column": 6,
+          "specs": [
+            {
+              "title": "编辑记录 — 内容更新成功",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1194,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:32.573Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "606625eb4cf617823ae1-95a974b1e6d888d0f037",
+              "file": "viral-scripts.spec.ts",
+              "line": 145,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 删除爆款记录",
+          "file": "viral-scripts.spec.ts",
+          "line": 184,
+          "column": 6,
+          "specs": [
+            {
+              "title": "删除记录 — 从列表消失",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1136,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:33.775Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "606625eb4cf617823ae1-979f17f79471bd94555a",
+              "file": "viral-scripts.spec.ts",
+              "line": 203,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 按关联红人筛选",
+          "file": "viral-scripts.spec.ts",
+          "line": 239,
+          "column": 6,
+          "specs": [
+            {
+              "title": "按关联红人筛选 — 仅显示该红人关联的爆款",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "D:\\2026年工作\\AI相关\\AI工具箱新架构方案\\aiintalk\\mcn-platform\\apps\\web\\e2e\\viral-scripts.spec.ts",
+                        "line": 254,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 1470,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:34.918Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "D:\\2026年工作\\AI相关\\AI工具箱新架构方案\\aiintalk\\mcn-platform\\apps\\web\\e2e\\viral-scripts.spec.ts",
+                            "line": 254,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "606625eb4cf617823ae1-600bf7424f8f0ca32e78",
+              "file": "viral-scripts.spec.ts",
+              "line": 241,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "M2 — 爆款库权限",
+          "file": "viral-scripts.spec.ts",
+          "line": 262,
+          "column": 6,
+          "specs": [
+            {
+              "title": "运营调用 DELETE /api/viral-scripts/[id] — 返回 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "admin",
+                  "projectName": "admin",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 182,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:36.394Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "606625eb4cf617823ae1-4b90bc67c9ca486783e2",
+              "file": "viral-scripts.spec.ts",
+              "line": 266,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "security.spec.ts",
+      "file": "security.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "安全 — 非法 ID 拦截 (C-02)",
+          "file": "security.spec.ts",
+          "line": 25,
+          "column": 6,
+          "specs": [
+            {
+              "title": "GET /api/kols/abc → 400（非数字 ID）",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 205,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:37.305Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-853c9473099d861630ef",
+              "file": "security.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "GET /api/kols/0 → 400（零边界）",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 159,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:37.871Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-4e161472e031f6e9bcbe",
+              "file": "security.spec.ts",
+              "line": 33,
+              "column": 7
+            },
+            {
+              "title": "GET /api/kols/9999999999999999999999 → 400（超出 PG bigint 上界）",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 174,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:38.037Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-f976c51ca37bdce36b16",
+              "file": "security.spec.ts",
+              "line": 38,
+              "column": 7
+            },
+            {
+              "title": "GET /api/products/xyz → 400",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 169,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:38.222Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-5079507b1699d1642d5a",
+              "file": "security.spec.ts",
+              "line": 43,
+              "column": 7
+            },
+            {
+              "title": "GET /api/viral-scripts/not-a-number → 400",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 188,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:38.396Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-5f22081ef4019dfdcb5e",
+              "file": "security.spec.ts",
+              "line": 48,
+              "column": 7
+            },
+            {
+              "title": "非法 ID 不触发 500（不暴露堆栈）",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 153,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:38.588Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-57af93f84e95b0af1242",
+              "file": "security.spec.ts",
+              "line": 53,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — 权限拦截 (H-02)",
+          "file": "security.spec.ts",
+          "line": 66,
+          "column": 6,
+          "specs": [
+            {
+              "title": "operator POST /api/kols → 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 148,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:38.748Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-01a7ff3fb774a4a9440e",
+              "file": "security.spec.ts",
+              "line": 71,
+              "column": 7
+            },
+            {
+              "title": "operator PATCH /api/kols/[id] → 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 181,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:38.903Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-b44c62427a7b25be4de8",
+              "file": "security.spec.ts",
+              "line": 76,
+              "column": 7
+            },
+            {
+              "title": "operator POST /api/users → 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 160,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:39.096Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-686443c4f4dea5682b51",
+              "file": "security.spec.ts",
+              "line": 81,
+              "column": 7
+            },
+            {
+              "title": "operator DELETE /api/users/[id] → 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 166,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:39.262Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-a4b899c3b252cb951e9b",
+              "file": "security.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "operator PATCH /api/products/[id] → 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 183,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:39.437Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-832d32d72170aee7cf60",
+              "file": "security.spec.ts",
+              "line": 93,
+              "column": 7
+            },
+            {
+              "title": "operator DELETE /api/viral-scripts/[id] → 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 202,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:39.627Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-f9926a236201aa3a612e",
+              "file": "security.spec.ts",
+              "line": 98,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — 未认证请求",
+          "file": "security.spec.ts",
+          "line": 107,
+          "column": 6,
+          "specs": [
+            {
+              "title": "未认证 GET /api/kols → 401 或 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 257,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:39.835Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-a56e79fd13f04626dbd5",
+              "file": "security.spec.ts",
+              "line": 112,
+              "column": 7
+            },
+            {
+              "title": "未认证 POST /api/kols → 401 或 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 275,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:40.099Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-ad353d6260acd7b69027",
+              "file": "security.spec.ts",
+              "line": 119,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — URL 字段校验 (H-03)",
+          "file": "security.spec.ts",
+          "line": 130,
+          "column": 6,
+          "specs": [
+            {
+              "title": "POST /api/kols 携带 javascript: URL → 不返回 500",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 281,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:40.387Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-4aee1833b5ba4f225243",
+              "file": "security.spec.ts",
+              "line": 132,
+              "column": 7
+            },
+            {
+              "title": "POST /api/viral-scripts 携带 javascript: referenceUrl → 不返回 500",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 192,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:40.679Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-6913aa2eb5df29a854a7",
+              "file": "security.spec.ts",
+              "line": 142,
+              "column": 7
+            },
+            {
+              "title": "POST /api/viral-scripts 携带合法 https URL → 不被 400 拒绝",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 479,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:40.878Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-d9844804c70904f62738",
+              "file": "security.spec.ts",
+              "line": 149,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — 速率限制 (H-01)",
+          "file": "security.spec.ts",
+          "line": 165,
+          "column": 6,
+          "specs": [
+            {
+              "title": "改密接口 60s 内超 10 次 → 429",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2490,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:41.364Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-2d0bf2306321539819db",
+              "file": "security.spec.ts",
+              "line": 168,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — 日期校验 (H-04)",
+          "file": "security.spec.ts",
+          "line": 189,
+          "column": 6,
+          "specs": [
+            {
+              "title": "POST /api/viral-scripts 携带无效 publishAt → 400",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 180,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:43.861Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-e5e47703ca30cb725aba",
+              "file": "security.spec.ts",
+              "line": 191,
+              "column": 7
+            },
+            {
+              "title": "PATCH /api/viral-scripts/[id] 携带 NaN 日期 → 400 或 404",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 192,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:44.051Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-b2a2c5fc3ab78e9aa88d",
+              "file": "security.spec.ts",
+              "line": 198,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — 字段类型守卫 (H-05)",
+          "file": "security.spec.ts",
+          "line": 209,
+          "column": 6,
+          "specs": [
+            {
+              "title": "PATCH /api/kols/[id] name 字段传 number → 400 或 404",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 195,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:44.252Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-a28c20c3f217b4ba6beb",
+              "file": "security.spec.ts",
+              "line": 211,
+              "column": 7
+            },
+            {
+              "title": "PATCH /api/viral-scripts/[id] title 字段传 array → 400 或 404",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 190,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:44.459Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-3baa9db8e6397614eac9",
+              "file": "security.spec.ts",
+              "line": 216,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — 密码复杂度 (M-05)",
+          "file": "security.spec.ts",
+          "line": 225,
+          "column": 6,
+          "specs": [
+            {
+              "title": "创建用户密码无大写字母 → 400",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 186,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:44.656Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-a4eb102fa315ffdae531",
+              "file": "security.spec.ts",
+              "line": 227,
+              "column": 7
+            },
+            {
+              "title": "创建用户密码无数字 → 400",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 186,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:44.848Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-6697cb67e22a42f8f43a",
+              "file": "security.spec.ts",
+              "line": 234,
+              "column": 7
+            },
+            {
+              "title": "创建用户密码过短 → 400",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 208,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:45.043Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-fe9dc0780da4db2eb66f",
+              "file": "security.spec.ts",
+              "line": 241,
+              "column": 7
+            },
+            {
+              "title": "创建用户密码合格 → 201",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 459,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:45.261Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-1dde280464aca5f1eb2d",
+              "file": "security.spec.ts",
+              "line": 248,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — 枚举校验 (M-01)",
+          "file": "security.spec.ts",
+          "line": 263,
+          "column": 6,
+          "specs": [
+            {
+              "title": "GET /api/kols?status=invalid_enum → 不暴露 Prisma 错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 170,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:45.734Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-90155bbdaefbc7a41058",
+              "file": "security.spec.ts",
+              "line": 265,
+              "column": 7
+            },
+            {
+              "title": "GET /api/users?role=hacker → 不暴露 Prisma 错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 205,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:45.913Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-2d9683ec9fa3ee2b2642",
+              "file": "security.spec.ts",
+              "line": 274,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "安全 — 响应内容安全",
+          "file": "security.spec.ts",
+          "line": 283,
+          "column": 6,
+          "specs": [
+            {
+              "title": "GET /api/users 响应中不包含密码字段",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "security",
+                  "projectName": "security",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 212,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T07:12:46.128Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7e9410bcc1ef00e9656-63919b13b0e081e63baa",
+              "file": "security.spec.ts",
+              "line": 285,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-04T07:11:39.174Z",
+    "duration": 67539.795,
+    "expected": 71,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

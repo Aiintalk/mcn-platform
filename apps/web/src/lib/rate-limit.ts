@@ -2,13 +2,15 @@ type Entry = { count: number; resetAt: number }
 
 const store = new Map<string, Entry>()
 const WINDOW_MS = 60_000 // 1 分钟
-const MAX_REQUESTS = 10   // 同一 bucket 每分钟最多 10 次
 
 /**
  * 返回 true 表示放行，false 表示触发限流。
  * key 建议带接口前缀（如 `auth:1.2.3.4`），避免不同接口共用计数。
+ * E2E 测试环境可通过 E2E_RATE_LIMIT_MAX 环境变量全局放开阈值。
  */
-export function checkRateLimit(key: string): boolean {
+export function checkRateLimit(key: string, maxRequests = 10): boolean {
+  const envMax = process.env.E2E_RATE_LIMIT_MAX ? parseInt(process.env.E2E_RATE_LIMIT_MAX, 10) : null
+  const limit = envMax && envMax > maxRequests ? envMax : maxRequests
   const now = Date.now()
   const entry = store.get(key)
 
@@ -17,7 +19,7 @@ export function checkRateLimit(key: string): boolean {
     return true
   }
 
-  if (entry.count >= MAX_REQUESTS) return false
+  if (entry.count >= limit) return false
 
   entry.count++
   return true

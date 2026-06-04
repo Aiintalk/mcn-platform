@@ -9,7 +9,12 @@
     "db:migrate": "pnpm --filter web db:migrate",
     "db:deploy": "pnpm --filter web db:deploy",
     "db:seed": "pnpm --filter web db:seed",
-    "db:studio": "pnpm --filter web prisma studio"
+    "db:studio": "pnpm --filter web prisma studio",
+    "e2e": "pnpm --filter web e2e",
+    "e2e:report": "pnpm --filter web e2e:report",
+    "e2e:report:m1": "pnpm e2e && node scripts/generate-test-report.mjs m1",
+    "e2e:report:m2": "pnpm e2e && node scripts/generate-test-report.mjs m2",
+    "e2e:report:gen": "node scripts/generate-test-report.mjs"
   },
   "engines": {
     "node": ">=20.0.0",
