@@ -1,22 +1,17 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAuth } from '@/lib/api-helpers'
-
-type Params = { params: { id: string } }
+import { ok, err, requireAdmin, parseBigIntId, isValidHttpUrl } from '@/lib/api-helpers'
 
 // POST /api/kols/[id]/upload-profile — 上传覆盖人格档案（带版本管理）
-export async function POST(req: NextRequest, { params }: Params) {
-  const { session, res } = await requireAuth()
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+  const { session, res } = await requireAdmin()
   if (res) return res
 
-  const kolId = BigInt(params.id)
+  const kolId = parseBigIntId(params.id)
+  if (kolId === null) return err('无效 ID', 400)
+
   const kol = await prisma.kol.findUnique({ where: { id: kolId } })
   if (!kol) return err('红人不存在', 404)
-
-  const isAdmin = session!.user.role === 'admin'
-  if (!isAdmin && kol.ownerId?.toString() !== session!.user.id) {
-    return err('无权操作该红人', 403)
-  }
 
   let body: unknown
   try {
@@ -30,17 +25,18 @@ export async function POST(req: NextRequest, { params }: Params) {
   if (!soulMd && !contentPlanMd) {
     return err('soulMd 或 contentPlanMd 至少传一个', 400)
   }
+  if (sourceFileUrl != null && !isValidHttpUrl(sourceFileUrl)) {
+    return err('sourceFileUrl 必须为 http/https URL', 400)
+  }
 
-  // 获取当前最新版本号
-  const latestProfile = await prisma.kolProfile.findFirst({
-    where: { kolId },
-    orderBy: { version: 'desc' },
-    select: { version: true },
-  })
-  const nextVersion = (latestProfile?.version ?? 0) + 1
-
-  // 在事务中：将旧 current 标记为非当前，然后创建新版本
   const newProfile = await prisma.$transaction(async (tx) => {
+    const latestProfile = await tx.kolProfile.findFirst({
+      where: { kolId },
+      orderBy: { version: 'desc' },
+      select: { version: true },
+    })
+    const nextVersion = (latestProfile?.version ?? 0) + 1
+
     await tx.kolProfile.updateMany({
       where: { kolId, isCurrent: true },
       data: { isCurrent: false },

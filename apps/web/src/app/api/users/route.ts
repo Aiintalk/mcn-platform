@@ -4,6 +4,9 @@ import { prisma } from '@/lib/prisma'
 import { ok, err, requireAdmin } from '@/lib/api-helpers'
 import { Role, UserStatus } from '@prisma/client'
 
+const VALID_USER_STATUSES = Object.values(UserStatus)
+const VALID_USER_ROLES = Object.values(Role)
+
 // GET /api/users — 用户列表
 export async function GET(req: NextRequest) {
   const { res } = await requireAdmin()
@@ -12,8 +15,11 @@ export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl
   const page = Math.max(1, parseInt(searchParams.get('page') ?? '1'))
   const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get('pageSize') ?? '20')))
-  const status = searchParams.get('status') as UserStatus | null
-  const role = searchParams.get('role') as Role | null
+  const statusRaw = searchParams.get('status')
+  const roleRaw = searchParams.get('role')
+  // 枚举白名单：值无效时静默忽略，不报错
+  const status = statusRaw && VALID_USER_STATUSES.includes(statusRaw as UserStatus) ? (statusRaw as UserStatus) : null
+  const role = roleRaw && VALID_USER_ROLES.includes(roleRaw as Role) ? (roleRaw as Role) : null
 
   const where = {
     ...(status ? { status } : {}),
@@ -68,8 +74,21 @@ export async function POST(req: NextRequest) {
   if (!['admin', 'operator'].includes(role)) {
     return err('role 必须为 admin 或 operator', 400)
   }
+  // Task 9: 用户名格式校验
+  if (!/^[a-zA-Z0-9_-]{3,50}$/.test(username)) {
+    return err('username 只能含字母、数字、_ 和 -，长度 3~50', 400)
+  }
+  // Task 9: 显示名格式校验
+  const trimmedDisplayName = displayName.trim()
+  if (trimmedDisplayName.length === 0 || trimmedDisplayName.length > 100) {
+    return err('displayName 长度须在 1~100 之间', 400)
+  }
+  // Task 10: 密码复杂度校验
   if (password.length < 8) {
     return err('密码至少 8 位', 400)
+  }
+  if (!/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+    return err('密码须包含至少 1 个大写字母和 1 个数字', 400)
   }
 
   const existing = await prisma.user.findUnique({ where: { username } })
@@ -80,7 +99,7 @@ export async function POST(req: NextRequest) {
   const user = await prisma.user.create({
     data: {
       username,
-      displayName,
+      displayName: trimmedDisplayName,
       passwordHash,
       role: role as Role,
       status: UserStatus.active,

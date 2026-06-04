@@ -1,10 +1,16 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { ok, err, requireAuth } from '@/lib/api-helpers'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
 
 // POST /api/users/me/change-password
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req)
+  if (!checkRateLimit(`pwd:${ip}`)) {
+    return NextResponse.json({ error: '请求过于频繁，请稍后再试' }, { status: 429 })
+  }
+
   const { session, res } = await requireAuth()
   if (res) return res
 
@@ -22,6 +28,9 @@ export async function POST(req: NextRequest) {
   }
   if (newPassword.length < 8) {
     return err('新密码至少 8 位', 400)
+  }
+  if (!/[A-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+    return err('密码须包含至少 1 个大写字母和 1 个数字', 400)
   }
   if (currentPassword === newPassword) {
     return err('新密码不能与当前密码相同', 400)

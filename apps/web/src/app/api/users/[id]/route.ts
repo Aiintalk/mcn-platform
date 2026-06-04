@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
-import { ok, err, requireAdmin } from '@/lib/api-helpers'
+import { ok, err, requireAdmin, parseBigIntId } from '@/lib/api-helpers'
 import { Role, UserStatus } from '@prisma/client'
 
 type Params = { params: { id: string } }
@@ -11,7 +11,9 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const { res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
   const user = await prisma.user.findUnique({
     where: { id },
     select: {
@@ -34,10 +36,11 @@ export async function GET(_req: NextRequest, { params }: Params) {
 // PATCH /api/users/[id]
 // 支持字段：displayName, role, status, password（重置密码）
 export async function PATCH(req: NextRequest, { params }: Params) {
-  const { res } = await requireAdmin()
+  const { session, res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
 
   let body: unknown
   try {
@@ -48,6 +51,10 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   const { displayName, role, status, password } = body as Record<string, string>
 
+  // Task 12: 防止管理员修改自己的角色或状态（防止自降权）
+  const selfId = BigInt(session!.user.id)
+  const isSelf = id === selfId
+
   const updateData: Record<string, unknown> = {}
 
   if (displayName !== undefined) {
@@ -57,16 +64,22 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   if (role !== undefined) {
     if (!['admin', 'operator'].includes(role)) return err('role 无效', 400)
+    if (isSelf) return err('不能修改自己的角色', 400)
     updateData.role = role as Role
   }
 
   if (status !== undefined) {
     if (!['active', 'disabled'].includes(status)) return err('status 无效', 400)
+    if (isSelf) return err('不能修改自己的状态', 400)
     updateData.status = status as UserStatus
   }
 
   if (password !== undefined) {
     if (password.length < 8) return err('密码至少 8 位', 400)
+    // Task 10: 密码复杂度校验
+    if (!/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+      return err('密码须包含至少 1 个大写字母和 1 个数字', 400)
+    }
     updateData.passwordHash = await bcrypt.hash(password, 12)
     // 重置密码后清空 passwordChangedAt，下次登录强制改密
     updateData.passwordChangedAt = null
@@ -99,10 +112,15 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
 // DELETE /api/users/[id] — 软删（status → disabled）
 export async function DELETE(_req: NextRequest, { params }: Params) {
-  const { res } = await requireAdmin()
+  const { session, res } = await requireAdmin()
   if (res) return res
 
-  const id = BigInt(params.id)
+  const id = parseBigIntId(params.id)
+  if (id === null) return err('无效 ID', 400)
+
+  // Task 12: 防止管理员禁用自己
+  if (id === BigInt(session!.user.id)) return err('不能禁用自己的账号', 400)
+
   const user = await prisma.user.findUnique({ where: { id } })
   if (!user) return err('用户不存在', 404)
 
